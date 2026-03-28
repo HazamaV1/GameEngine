@@ -1,6 +1,6 @@
 #ifndef TGA_READER_H
 #define TGA_READER_H
-
+//
 #include "StandardIncludes.h"
 
 class Asset;

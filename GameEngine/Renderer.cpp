@@ -1,6 +1,6 @@
 #include "Renderer.h"
 #include "Asset.h"
-
+//
 Renderer::Renderer()
 {
 	m_window = nullptr;

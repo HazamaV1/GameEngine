@@ -1,6 +1,6 @@
 #ifndef RESOURCE_H
 #define RESOURCE_H
-
+//
 #include "Serializable.h"
 #include "ObjectPool.h"
 #include "AssetController.h"

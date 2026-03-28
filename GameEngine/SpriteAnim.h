@@ -1,6 +1,6 @@
 #ifndef SPRITEANIM_H
 #define SPRITEANIM_H
-
+//
 #include "Resource.h"
 
 class SpriteAnim : Resource

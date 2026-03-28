@@ -3,7 +3,7 @@
 
 #include "StandardIncludes.h"
 #include "Texture.h"
-
+//
 class Asset;
 
 class Renderer : public Singleton<Renderer>

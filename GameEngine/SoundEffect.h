@@ -1,6 +1,6 @@
 #ifndef SOUND_EFFECT_H
 #define SOUND_EFFECT_H
-
+//
 #include "Resource.h"
 
 class Asset;

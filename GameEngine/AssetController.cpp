@@ -1,6 +1,6 @@
 #include "AssetController.h"
 #include "FileController.h"
-
+//
 StackAllocator* AssetController::Stack = nullptr;
 
 AssetController::AssetController()

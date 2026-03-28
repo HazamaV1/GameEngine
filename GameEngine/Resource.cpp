@@ -1,5 +1,5 @@
 #include "Resource.h"
-
+//
 ObjectPool<Resource>* Resource::Pool;
 
 Resource::Resource()

@@ -1,6 +1,6 @@
 #ifndef WAV_DRAW_H
 #define WAV_DRAW_H
-
+//
 #include "StandardIncludes.h"
 
 class Renderer;

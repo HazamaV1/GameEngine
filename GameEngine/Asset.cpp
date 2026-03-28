@@ -1,5 +1,5 @@
 #include "Asset.h"
-
+//
 ObjectPool<Asset>* Asset::Pool;
 
 Asset::Asset()

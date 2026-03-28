@@ -1,5 +1,5 @@
 #include "SpriteAnim.h"
-
+//
 ObjectPool<SpriteAnim>* SpriteAnim::Pool;
 
 SpriteAnim::SpriteAnim()

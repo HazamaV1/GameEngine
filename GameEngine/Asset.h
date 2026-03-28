@@ -1,6 +1,6 @@
 #ifndef ASSET_H
 #define ASSET_H
-
+//
 #include "StandardIncludes.h"
 #include "ObjectPool.h"
 

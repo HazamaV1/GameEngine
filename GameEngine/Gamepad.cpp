@@ -1,5 +1,5 @@
 #include "Gamepad.h"
-
+//
 void Gamepad::Initialize()
 {
 	M_ASSERT(SDL_InitSubSystem(SDL_INIT_GAMEPAD), "Failed to initialize gamepad input.")

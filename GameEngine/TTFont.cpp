@@ -1,6 +1,6 @@
 #include "TTFont.h"
 #include "Renderer.h"
-
+//
 TTFont::TTFont()
 {
 	m_font = nullptr;

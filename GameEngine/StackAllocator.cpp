@@ -1,6 +1,6 @@
 #include "StackAllocator.h"
 #include "StandardIncludes.h"
-
+//
 StackAllocator::StackAllocator()
 {
 	m_stackStart = nullptr;

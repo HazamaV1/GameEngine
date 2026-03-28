@@ -1,5 +1,5 @@
 #include "Timing.h"
-
+//
 Timing::Timing()
 {
 	m_fpsCount = 0;

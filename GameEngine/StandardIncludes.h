@@ -6,7 +6,7 @@
 
 #define NATIVE_XRES 1920
 #define NATIVE_YRES 1080
-
+//
 #include <string>
 #include <vector>
 #include <iostream>

@@ -1,6 +1,6 @@
 #ifndef TIMING_H
 #define TIMING_H
-
+//
 #include "StandardIncludes.h"
 
 class Timing : public Singleton<Timing>

@@ -1,5 +1,5 @@
 #include "Mouse.h"
-
+//
 Mouse::Mouse()
 {
 	m_x = 0;

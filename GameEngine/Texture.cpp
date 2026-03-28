@@ -1,7 +1,7 @@
 #include "Texture.h"
 
 ObjectPool<Texture>* Texture::Pool = nullptr;
-
+//
 Texture::Texture()
 {
 	m_imageInfo = {};

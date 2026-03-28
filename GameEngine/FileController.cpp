@@ -1,6 +1,6 @@
 #include "FileController.h"
 #include <string>
-
+//
 FileController::FileController()
 {
 	m_handle = nullptr;

@@ -1,6 +1,6 @@
 #include "RenderTarget.h"
 #include "Renderer.h"
-
+//
 RenderTarget::RenderTarget()
 {
 	m_texture = nullptr;
