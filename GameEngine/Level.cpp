@@ -68,10 +68,14 @@ void Level::Initialize()
 	m_fArial20->Initialize(20);
 	m_audio = &AudioController::Instance();
 	m_effect = m_audio->LoadEffect("../Assets/Audio/Effects/Whoosh.wav");
+	m_player = Unit::Pool->GetResource();
+	m_player->createPlayer((float)m_renderer->GetWindowSize().x,(float)m_renderer->GetWindowSize().y );
+	
 
 	m_sprite = SpriteSheet::Pool->GetResource();
 	m_sprite->Load("../Assets/Textures/Warrior.tga");
 	m_sprite->SetSize(17, 6, 69, 44);
+	//m_sprite->AddAnimation(EN_AN_IDLE, 0, 6, 6.0f);
 	m_sprite->AddAnimation(EN_AN_RUN, 6, 8, 6.0f);
 	
 }
@@ -142,6 +146,8 @@ void Level::RunLevel()
 	while (!m_quit)
 	{
 		t->Tick();
+		glm::vec2 playerPos = m_player->getPosition();
+		//m_renderer->RenderTexture(m_sprite, m_sprite->Update(EN_AN_IDLE, t->GetDeltaTime()), SDL_FRect{ playerPos.x, playerPos.y, 69.0f * 1.25f, 44.0f * 1.25f });
 		m_renderer->SetDrawColor({ 255, 255, 255, 255 });
 		m_renderer->ClearScreen();
 		while (SDL_PollEvent(&m_sdlEvent))
@@ -149,7 +155,8 @@ void Level::RunLevel()
 			HandleInput(m_sdlEvent);
 		}
 
-		m_renderer->RenderTexture(m_sprite, m_sprite->Update(EN_AN_RUN, t->GetDeltaTime()), SDL_FRect{0, 150, 69*3, 44*3});
+		m_player->updatePlayer(m_sdlEvent, m_input, t->GetDeltaTime());
+		m_renderer->RenderTexture(m_sprite, m_sprite->Update(EN_AN_RUN, t->GetDeltaTime()), SDL_FRect{playerPos.x, playerPos.y, 69.0f*1.25f, 44.0f*1.25f});
 
 		SDL_RenderPresent(m_renderer->GetRenderer());
 	}

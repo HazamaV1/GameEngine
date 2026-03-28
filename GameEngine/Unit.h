@@ -5,6 +5,8 @@
 #include "SoundEffect.h"
 #include "FileChunk.h"
 
+class InputController;
+
 class Unit : public Resource
 {
 public:
@@ -16,10 +18,16 @@ public:
 	void ToString() override;
 	void AssignNonDefaultValues() override;
 
+	void createPlayer(float screenW, float screenH);
+	void updatePlayer(SDL_Event& _event, InputController* _input, float _deltaTime);
+
+	glm::vec2 getPosition() const { return m_unitPosition; }
+
 	static ObjectPool<Unit>* Pool;
 
 private:
-
+	glm::vec2 m_unitMove;
+	glm::vec2 m_unitPosition;
 	SoundEffect* m_soundEffect;
 	FileChunk* m_chunk;
 };

@@ -11,7 +11,7 @@ class SoundEffect;
 class Song;
 class SpriteSheet;
 class Timing;
-class WAVDraw;
+class Unit;
 
 class Level : public Resource
 {
@@ -39,6 +39,7 @@ private:
 	SoundEffect* m_effect;
 	Song* m_song;
 	vector<Unit*> m_units;
+	Unit* m_player;
 	SpriteSheet* m_sprite;
 	Timing* t;
 };
