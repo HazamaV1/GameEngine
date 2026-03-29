@@ -72,11 +72,14 @@ void Level::Initialize()
 	m_player->createPlayer((float)m_renderer->GetWindowSize().x,(float)m_renderer->GetWindowSize().y );
 	
 
-	m_sprite = SpriteSheet::Pool->GetResource();
-	m_sprite->Load("../Assets/Textures/Warrior.tga");
-	m_sprite->SetSize(17, 6, 69, 44);
-	m_sprite->AddAnimation(EN_AN_IDLE, 0, 6, 6.0f);
-	m_sprite->AddAnimation(EN_AN_RUN, 6, 8, 6.0f);
+	//m_sprite = SpriteSheet::Pool->GetResource();
+	//m_sprite->Load("../Assets/Textures/Warrior.tga");
+	//m_sprite->SetSize(17, 6, 69, 44);
+	//m_sprite->setColorRed(0);
+	//m_sprite->setColorGreen(0);
+	//m_sprite->setColorBlue(255);
+	//m_sprite->AddAnimation(EN_AN_IDLE, 0, 6, 6.0f);
+	//m_sprite->AddAnimation(EN_AN_RUN, 6, 8, 6.0f);
 	
 }
 
@@ -173,11 +176,11 @@ void Level::RunLevel()
 
 		if (m_player->getUnitMoving() == false)
 		{
-			m_renderer->RenderTexture(m_sprite, m_sprite->Update(EN_AN_IDLE, t->GetDeltaTime()), SDL_FRect{ playerX, playerPos.y, playerDirection*69.0f * 1.25f, 44.0f * 1.25f });
+			m_renderer->RenderTexture(m_player->getUnitSprite(), m_player->getUnitSprite()->Update(EN_AN_IDLE, t->GetDeltaTime()), SDL_FRect{playerX, playerPos.y, playerDirection * 69.0f * 1.25f, 44.0f * 1.25f});
 		}
 		else 
 		{
-			m_renderer->RenderTexture(m_sprite, m_sprite->Update(EN_AN_RUN, t->GetDeltaTime()), SDL_FRect{ playerX, playerPos.y, playerDirection*69.0f*1.25f, 44.0f*1.25f});
+			m_renderer->RenderTexture(m_player->getUnitSprite(), m_player->getUnitSprite()->Update(EN_AN_RUN, t->GetDeltaTime()), SDL_FRect{playerX, playerPos.y, playerDirection * 69.0f * 1.25f, 44.0f * 1.25f});
 		}
 
 		SDL_RenderPresent(m_renderer->GetRenderer());

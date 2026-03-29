@@ -6,6 +6,7 @@
 #include "FileChunk.h"
 
 class InputController;
+class SpriteSheet;
 
 class Unit : public Resource
 {
@@ -20,10 +21,12 @@ public:
 
 	void createPlayer(float screenW, float screenH);
 	void updatePlayer(SDL_Event& _event, InputController* _input, float _deltaTime);
+	void Initialize();
 
 	glm::vec2 getPosition() const { return m_unitPosition; }
 	bool getDirection() { return m_unitDirection; }
 	bool getUnitMoving() { return m_unitIsMoving; }
+	SpriteSheet* getUnitSprite() { return m_playerSprite; }
 	
 	static ObjectPool<Unit>* Pool;
 
@@ -34,6 +37,7 @@ private:
 	bool m_unitIsMoving;
 	SoundEffect* m_soundEffect;
 	FileChunk* m_chunk;
+	SpriteSheet* m_playerSprite;
 };
 
 #endif // !UNIT_H

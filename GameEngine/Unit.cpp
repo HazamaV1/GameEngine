@@ -2,6 +2,8 @@
 #include "InputController.h"
 #include "Keyboard.h"
 #include "Mouse.h"
+#include "SpriteAnim.h"
+#include "SpriteSheet.h"
 //
 ObjectPool<Unit>* Unit::Pool = nullptr;
 
@@ -15,6 +17,21 @@ Unit::Unit()
 
 Unit::~Unit()
 {
+}
+
+void Unit::Initialize()
+{
+	SpriteSheet::Pool = new ObjectPool<SpriteSheet>();
+	SpriteAnim::Pool = new ObjectPool<SpriteAnim>();
+
+	m_playerSprite = SpriteSheet::Pool->GetResource();
+	m_playerSprite->Load("../Assets/Textures/Warrior.tga");
+	m_playerSprite->SetSize(17, 6, 69, 44);
+	m_playerSprite->setColorRed(0);
+	m_playerSprite->setColorGreen(0);
+	m_playerSprite->setColorBlue(255);
+	m_playerSprite->AddAnimation(EN_AN_IDLE, 0, 6, 6.0f);
+	m_playerSprite->AddAnimation(EN_AN_RUN, 6, 8, 6.0f);
 }
 
 void Unit::AssignNonDefaultValues()
@@ -45,6 +62,7 @@ void Unit::ToString()
 
 void Unit::createPlayer(float screenW, float screenH)
 {
+	Initialize();
 	m_unitPosition = {screenW / 2.0f, screenH / 2.0f};
 }
 

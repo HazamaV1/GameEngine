@@ -133,6 +133,7 @@ SDL_Texture* Renderer::GetSDLTexture(Texture* _texture)
 
 	SDL_SetTextureBlendMode(m_textures[guid], _texture->GetBlendAlpha());
 	SDL_SetTextureAlphaMod(m_textures[guid], _texture->GetBlendAlpha());
+	SDL_SetTextureColorMod(m_textures[guid], _texture->getColorRed(), _texture->getColorGreen(), _texture->getColorBlue());
 	return m_textures[guid];
 }
 
