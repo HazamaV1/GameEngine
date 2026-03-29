@@ -58,18 +58,33 @@ void Unit::updatePlayer(SDL_Event& _event, InputController* _input, float _delta
 	{
 		m_unitMove.y -= 1.0f;
 	}
+
 	if (_input->KB()->GetKeyStates()[SDL_SCANCODE_DOWN])
 	{
 		m_unitMove.y += 1.0f;
 	}
+	
 	if (_input->KB()->GetKeyStates()[SDL_SCANCODE_LEFT])
 	{
 		m_unitMove.x -= 1.0f;
+		m_unitDirection = true;
 	}
+
 	if (_input->KB()->GetKeyStates()[SDL_SCANCODE_RIGHT])
 	{
 		m_unitMove.x += 1.0f;
+		m_unitDirection = false;
+	}
+
+	m_unitPosition += m_unitMove * 100.0f * _deltaTime;
+
+	if (m_unitMove.x == 0.0f && m_unitMove.y == 0.0f)
+	{
+		m_unitIsMoving = false;
+	}
+	else
+	{
+		m_unitIsMoving = true;
 	}
 	
-	m_unitPosition += m_unitMove * 200.0f * _deltaTime;
 }

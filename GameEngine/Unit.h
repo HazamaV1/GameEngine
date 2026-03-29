@@ -22,12 +22,16 @@ public:
 	void updatePlayer(SDL_Event& _event, InputController* _input, float _deltaTime);
 
 	glm::vec2 getPosition() const { return m_unitPosition; }
-
+	bool getDirection() { return m_unitDirection; }
+	bool getUnitMoving() { return m_unitIsMoving; }
+	
 	static ObjectPool<Unit>* Pool;
 
 private:
 	glm::vec2 m_unitMove;
 	glm::vec2 m_unitPosition;
+	bool m_unitDirection;
+	bool m_unitIsMoving;
 	SoundEffect* m_soundEffect;
 	FileChunk* m_chunk;
 };
