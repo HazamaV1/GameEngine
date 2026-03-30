@@ -100,21 +100,30 @@ void Level::Serialize(std::ostream& _stream)
 		SerializePointer(_stream, m_units[count]);
 	}
 
+	_stream.write(reinterpret_cast<char*>(&m_npcSpeed), sizeof(m_npcSpeed));
+	m_player->Serialize(_stream);
 	Resource::Serialize(_stream);
 }
 
 void Level::Deserialize(std::istream& _stream)
 {
+	for (int i = 0; i < m_units.size(); i++)
+	{
+		Unit::Pool->ReleaseResource(m_units[i]);
+	}
+	m_units.clear();
 
 	int numberOfUnits;
 	_stream.read(reinterpret_cast<char*>(&numberOfUnits), sizeof(numberOfUnits));
 	for (int count = 0; count < numberOfUnits; count++)
 	{
-		Unit* unit;
+		Unit* unit = Unit::Pool->GetResource();
 		DeserializePointer(_stream, unit);
+		unit->npcInitialize();
 		m_units.push_back(unit);
 	}
-
+	_stream.read(reinterpret_cast<char*>(&m_npcSpeed), sizeof(m_npcSpeed));
+	m_player->Deserialize(_stream);
 	Resource::Deserialize(_stream);
 }
 
@@ -153,6 +162,20 @@ void Level::HandleInput(SDL_Event _event)
 			m_npcSpeed -= 10;
 		}
 	}
+
+	if (m_input->KB()->KeyUp(m_sdlEvent, SDLK_S))
+	{
+		ofstream writeStream("level.bin", ios::out | ios::binary );
+		this->Serialize(writeStream);
+		writeStream.close();
+	}
+
+	if (m_input->KB()->KeyUp(m_sdlEvent, SDLK_L))
+	{
+		ifstream readStream("level.bin", ios::in | ios::binary);
+		this->Deserialize(readStream);
+		readStream.close();
+	}
 }
 
 void Level::RunLevel()
@@ -169,6 +192,18 @@ void Level::RunLevel()
 		{
 			HandleInput(m_sdlEvent);
 		}
+
+		std::string keys = "[D]ecrease speed  [I]ncrease speed  [S]ave  [L]oad [ESC] Quit";
+		m_fArial20->Write(m_renderer->GetRenderer(), keys.c_str(), SDL_Color{ 0, 0, 255 }, SDL_Point{ 10, 10 });
+
+		std::string playerSpeed = "Player speed: " + std::to_string(m_player->getPlayerSpeed());
+		m_fArial20->Write(m_renderer->GetRenderer(), playerSpeed.c_str(), SDL_Color{ 0, 0, 255 }, SDL_Point{ 10, 40 });
+
+		std::string npcSpeed = "Enemy speed: " + std::to_string(m_npcSpeed);
+		m_fArial20->Write(m_renderer->GetRenderer(), npcSpeed.c_str(), SDL_Color{ 0, 255, 0 }, SDL_Point{ 10, 70 });
+
+		std::string npcTagged = "Enemys tagged: " + std::to_string(m_tagCount);
+		m_fArial20->Write(m_renderer->GetRenderer(), npcTagged.c_str(), SDL_Color{ 0, 255, 0 }, SDL_Point{ 10, 100 });
 
 		float playerDirection;
 		float playerX;
@@ -196,17 +231,15 @@ void Level::RunLevel()
 
 		for (int i = 0; i < m_units.size(); i++)
 		{
-			
+
 			float dist = glm::distance(playerPos, m_units[i]->getPosition());
-			if (dist < 30.0f)
+			if (dist < 30.0f && m_units[i]->getNpcTagged() == false)
 			{
-				if (m_units[i]->getNpcTagged() == false)
-				{
-					m_audio->Play(m_effect);
-					m_units[i]->setNpcTagged(true);
-				}
+				m_audio->Play(m_effect);
+				m_units[i]->setNpcTagged(true);
+				m_tagCount += 1;
 			}
-			else
+			else if (dist > 30.0f && m_units[i]->getNpcTagged() == false)
 			{
 				m_units[i]->updateNpc(t->GetDeltaTime(), playerPos, m_npcSpeed);
 			}

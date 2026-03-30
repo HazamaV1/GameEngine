@@ -27,6 +27,7 @@ public:
 	void Reset();
 
 	glm::vec2 getPosition() const { return m_unitPosition; }
+	float getPlayerSpeed() { return m_playerSpeed; }
 	bool getDirection() { return m_unitDirection; }
 	bool getUnitMoving() { return m_unitIsMoving; }
 	bool getNpcTagged() { return m_tagged; }
@@ -41,6 +42,7 @@ public:
 private:
 	glm::vec2 m_unitMove;
 	glm::vec2 m_unitPosition;
+	float m_playerSpeed;
 	bool m_unitDirection;
 	bool m_unitIsMoving;
 	bool m_tagged;

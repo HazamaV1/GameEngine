@@ -29,9 +29,6 @@ public:
 	void HandleInput(SDL_Event _event);
 	void RunLevel();
 
-	//int getNpcSpeed() { return m_npcSpeed; }
-	//void setNpcSpeed(int _npcSpeed) { m_npcSpeed = _npcSpeed; }
-
 private:
 	SDL_Event m_sdlEvent;
 	Renderer* m_renderer;
@@ -46,6 +43,7 @@ private:
 	SpriteSheet* m_sprite;
 	Timing* t;
 	int m_npcSpeed;
+	int m_tagCount;
 };
 
 #endif // LEVEL_H

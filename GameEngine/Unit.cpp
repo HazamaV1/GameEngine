@@ -11,6 +11,7 @@ Unit::Unit()
 {
 	m_unitPosition = {};
 	m_unitMove = {};
+	m_playerSpeed = 0.0f;
 	m_unitDirection = false;
 	m_unitIsMoving = false;
 	m_tagged = false;
@@ -39,6 +40,7 @@ void Unit::Reset()
 
 void Unit::Initialize()
 {
+	m_playerSpeed = 100.0f;
 	m_playerSprite = SpriteSheet::Pool->GetResource();
 	m_playerSprite->Load("../Assets/Textures/Warrior.tga");
 	m_playerSprite->SetSize(17, 6, 69, 44);
@@ -71,13 +73,17 @@ void Unit::AssignNonDefaultValues()
 
 void Unit::Serialize(std::ostream& _stream)
 {
-	SerializePointer(_stream, m_chunk);
+	_stream.write(reinterpret_cast<char*>(&m_unitPosition), sizeof(m_unitPosition));
+	_stream.write(reinterpret_cast<char*>(&m_tagged), sizeof(m_tagged));
+	_stream.write(reinterpret_cast<char*>(&m_unitDirection), sizeof(m_unitDirection));
 	Resource::Serialize(_stream);
 }
 
 void Unit::Deserialize(std::istream& _stream)
 {
-	DeserializePointer(_stream, m_chunk);
+	_stream.read(reinterpret_cast<char*>(&m_unitPosition), sizeof(m_unitPosition));
+	_stream.read(reinterpret_cast<char*>(&m_tagged), sizeof(m_tagged));
+	_stream.read(reinterpret_cast<char*>(&m_unitDirection), sizeof(m_unitDirection));
 	Resource::Deserialize(_stream);
 }
 
