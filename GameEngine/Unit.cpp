@@ -21,9 +21,6 @@ Unit::~Unit()
 
 void Unit::Initialize()
 {
-	SpriteSheet::Pool = new ObjectPool<SpriteSheet>();
-	SpriteAnim::Pool = new ObjectPool<SpriteAnim>();
-
 	m_playerSprite = SpriteSheet::Pool->GetResource();
 	m_playerSprite->Load("../Assets/Textures/Warrior.tga");
 	m_playerSprite->SetSize(17, 6, 69, 44);
@@ -32,6 +29,18 @@ void Unit::Initialize()
 	m_playerSprite->setColorBlue(255);
 	m_playerSprite->AddAnimation(EN_AN_IDLE, 0, 6, 6.0f);
 	m_playerSprite->AddAnimation(EN_AN_RUN, 6, 8, 6.0f);
+}
+
+void Unit::npcInitialize()
+{
+	m_npcSprite = SpriteSheet::Pool->GetResource();
+	m_npcSprite->Load("../Assets/Textures/Warrior.tga");
+	m_npcSprite->SetSize(17, 6, 69, 44);
+	m_npcSprite->setColorRed(0);
+	m_npcSprite->setColorGreen(255);
+	m_npcSprite->setColorBlue(0);
+	m_npcSprite->AddAnimation(EN_AN_IDLE, 0, 6, 6.0f);
+	m_npcSprite->AddAnimation(EN_AN_RUN, 6, 8, 6.0f);
 }
 
 void Unit::AssignNonDefaultValues()
@@ -70,8 +79,6 @@ void Unit::updatePlayer(SDL_Event& _event, InputController* _input, float _delta
 {
 	m_unitMove = { 0.0f, 0.0f };
 
-	_input->Process();
-
 	if (_input->KB()->GetKeyStates()[SDL_SCANCODE_UP])
 	{
 		m_unitMove.y -= 1.0f;
@@ -106,3 +113,4 @@ void Unit::updatePlayer(SDL_Event& _event, InputController* _input, float _delta
 	}
 	
 }
+

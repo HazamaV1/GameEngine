@@ -71,15 +71,21 @@ void Level::Initialize()
 	m_player = Unit::Pool->GetResource();
 	m_player->createPlayer((float)m_renderer->GetWindowSize().x,(float)m_renderer->GetWindowSize().y );
 	
+	srand(static_cast<unsigned int>(time(NULL)));
+	glm::vec2 playerPos = m_player->getPosition();
 
-	//m_sprite = SpriteSheet::Pool->GetResource();
-	//m_sprite->Load("../Assets/Textures/Warrior.tga");
-	//m_sprite->SetSize(17, 6, 69, 44);
-	//m_sprite->setColorRed(0);
-	//m_sprite->setColorGreen(0);
-	//m_sprite->setColorBlue(255);
-	//m_sprite->AddAnimation(EN_AN_IDLE, 0, 6, 6.0f);
-	//m_sprite->AddAnimation(EN_AN_RUN, 6, 8, 6.0f);
+	for (int i = 0; i < 10; i++)
+	{
+		Unit* npcs = Unit::Pool->GetResource();
+		npcs->npcInitialize();
+		float npcRandomAngle = rand() % 360;
+		float npcRadians = npcRandomAngle * (3.14159f / 180.0f);
+		float xOffset = playerPos.x + 150 * cos(npcRadians);
+		float yOffset = playerPos.y + 150 * sin(npcRadians);
+		glm::vec2 npcPos = { xOffset, yOffset };
+		npcs->setPosition(npcPos);
+		m_units.push_back(npcs);
+	}
 	
 }
 
@@ -131,15 +137,6 @@ void Level::HandleInput(SDL_Event _event)
 	{
 		m_quit = true;
 	}
-
-	//if (m_input->KB()->KeyUp(_event, SDLK_A))
-	//{
-	//	m_zoomY += 0.5f;
-	//}
-	//else if (m_input->KB()->KeyUp(_event, SDLK_S))
-	//{
-	//	m_zoomY -= 0.5f;
-	//}
 }
 
 void Level::RunLevel()
@@ -170,8 +167,6 @@ void Level::RunLevel()
 			playerX = playerPos.x;
 		}
 
-
-	/*	m_player->setUnitMoving(false);*/
 		m_player->updatePlayer(m_sdlEvent, m_input, t->GetDeltaTime());
 
 		if (m_player->getUnitMoving() == false)
@@ -181,6 +176,11 @@ void Level::RunLevel()
 		else 
 		{
 			m_renderer->RenderTexture(m_player->getUnitSprite(), m_player->getUnitSprite()->Update(EN_AN_RUN, t->GetDeltaTime()), SDL_FRect{playerX, playerPos.y, playerDirection * 69.0f * 1.25f, 44.0f * 1.25f});
+		}
+
+		for (int i = 0; i < m_units.size(); i++)
+		{
+			m_renderer->RenderTexture(m_units[i]->getNpcSprite(), m_units[i]->getNpcSprite()->Update(EN_AN_IDLE, t->GetDeltaTime()), SDL_FRect{m_units[i]->getPosition().x, m_units[i]->getPosition().y, 69.0f * 1.25f, 44.0f * 1.25f});
 		}
 
 		SDL_RenderPresent(m_renderer->GetRenderer());
