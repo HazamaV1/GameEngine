@@ -76,6 +76,7 @@ void GameController::RunGame()
 {
 	Level* level = new Level;
 	level->RunLevel();
+
 	delete level;
 }
 

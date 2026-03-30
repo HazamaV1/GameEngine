@@ -70,6 +70,7 @@ void Level::Initialize()
 	m_effect = m_audio->LoadEffect("../Assets/Audio/Effects/Whoosh.wav");
 	m_player = Unit::Pool->GetResource();
 	m_player->createPlayer((float)m_renderer->GetWindowSize().x,(float)m_renderer->GetWindowSize().y );
+	m_npcSpeed = 60;
 	
 	srand(static_cast<unsigned int>(time(NULL)));
 	glm::vec2 playerPos = m_player->getPosition();
@@ -137,6 +138,21 @@ void Level::HandleInput(SDL_Event _event)
 	{
 		m_quit = true;
 	}
+
+	if (m_npcSpeed < 60)
+	{
+		if (m_input->KB()->KeyUp(m_sdlEvent, SDLK_I))
+		{
+			m_npcSpeed += 10;
+		}
+	}
+	if (m_npcSpeed > 0)
+	{
+		if (m_input->KB()->KeyUp(m_sdlEvent, SDLK_D))
+		{
+			m_npcSpeed -= 10;
+		}
+	}
 }
 
 void Level::RunLevel()
@@ -180,7 +196,16 @@ void Level::RunLevel()
 
 		for (int i = 0; i < m_units.size(); i++)
 		{
-			m_renderer->RenderTexture(m_units[i]->getNpcSprite(), m_units[i]->getNpcSprite()->Update(EN_AN_IDLE, t->GetDeltaTime()), SDL_FRect{m_units[i]->getPosition().x, m_units[i]->getPosition().y, 69.0f * 1.25f, 44.0f * 1.25f});
+			m_units[i]->updateNpc(t->GetDeltaTime(), playerPos, m_npcSpeed);
+
+			if (m_units[i]->getUnitMoving() == true)
+			{
+				m_renderer->RenderTexture(m_units[i]->getNpcSprite(), m_units[i]->getNpcSprite()->Update(EN_AN_RUN, t->GetDeltaTime()), SDL_FRect{ m_units[i]->getPosition().x, m_units[i]->getPosition().y, 69.0f * 1.25f, 44.0f * 1.25f });
+			}
+			else
+			{
+				m_renderer->RenderTexture(m_units[i]->getNpcSprite(), m_units[i]->getNpcSprite()->Update(EN_AN_IDLE, t->GetDeltaTime()), SDL_FRect{ m_units[i]->getPosition().x, m_units[i]->getPosition().y, 69.0f * 1.25f, 44.0f * 1.25f });
+			}
 		}
 
 		SDL_RenderPresent(m_renderer->GetRenderer());

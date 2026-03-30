@@ -114,3 +114,28 @@ void Unit::updatePlayer(SDL_Event& _event, InputController* _input, float _delta
 	
 }
 
+void Unit::updateNpc(float _deltaTime, glm::vec2 _playerPos, int _npcSpeed)
+{
+	float distance = glm::distance(m_unitPosition, _playerPos);
+	m_unitMove = { 0.0f, 0.0f };
+
+	if (distance <= 140)
+	{
+		m_unitMove = glm::normalize(m_unitPosition - _playerPos);
+	}
+	else if (distance >= 160)
+	{
+		m_unitMove = glm::normalize(_playerPos - m_unitPosition);
+	}
+
+	m_unitPosition += m_unitMove * _npcSpeed *_deltaTime;
+
+	if (m_unitMove.x == 0.0f && m_unitMove.y == 0.0f)
+	{
+		m_unitIsMoving = false;
+	}
+	else
+	{
+		m_unitIsMoving = true;
+	}
+}
