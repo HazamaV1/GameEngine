@@ -196,15 +196,45 @@ void Level::RunLevel()
 
 		for (int i = 0; i < m_units.size(); i++)
 		{
-			m_units[i]->updateNpc(t->GetDeltaTime(), playerPos, m_npcSpeed);
-
-			if (m_units[i]->getUnitMoving() == true)
+			
+			float dist = glm::distance(playerPos, m_units[i]->getPosition());
+			if (dist < 30.0f)
 			{
-				m_renderer->RenderTexture(m_units[i]->getNpcSprite(), m_units[i]->getNpcSprite()->Update(EN_AN_RUN, t->GetDeltaTime()), SDL_FRect{ m_units[i]->getPosition().x, m_units[i]->getPosition().y, 69.0f * 1.25f, 44.0f * 1.25f });
+				if (m_units[i]->getNpcTagged() == false)
+				{
+					m_audio->Play(m_effect);
+					m_units[i]->setNpcTagged(true);
+				}
 			}
 			else
 			{
+				m_units[i]->updateNpc(t->GetDeltaTime(), playerPos, m_npcSpeed);
+			}
+
+			if (m_units[i]->getUnitMoving() == true && m_units[i]->getNpcTagged() == false)
+			{
+				m_renderer->RenderTexture(m_units[i]->getNpcSprite(), m_units[i]->getNpcSprite()->Update(EN_AN_RUN, t->GetDeltaTime()), SDL_FRect{ m_units[i]->getPosition().x, m_units[i]->getPosition().y, 69.0f * 1.25f, 44.0f * 1.25f });
+			}
+			else if (m_units[i]->getUnitMoving() != true && m_units[i]->getNpcTagged() == false)
+			{
 				m_renderer->RenderTexture(m_units[i]->getNpcSprite(), m_units[i]->getNpcSprite()->Update(EN_AN_IDLE, t->GetDeltaTime()), SDL_FRect{ m_units[i]->getPosition().x, m_units[i]->getPosition().y, 69.0f * 1.25f, 44.0f * 1.25f });
+			}
+			else
+			{
+				m_renderer->RenderTexture(m_units[i]->getNpcSprite(), m_units[i]->getNpcSprite()->Update(EN_AN_DEATH, t->GetDeltaTime()), SDL_FRect{ m_units[i]->getPosition().x, m_units[i]->getPosition().y, 69.0f * 1.25f, 44.0f * 1.25f });
+				m_units[i]->getNpcSprite()->setColorGreen(0);
+				m_units[i]->getNpcSprite()->setColorRed(255);
+				if (m_units[i]->getNpcSprite()->GetCurrentClip(EN_AN_DEATH) == 37)
+				{
+					Unit::Pool->ReleaseResource(m_units[i]);
+					m_units.erase(m_units.begin() + i);
+					i--;
+				}
+			}
+
+			if (m_units.size() == 0)
+			{
+				m_quit = true;
 			}
 		}
 

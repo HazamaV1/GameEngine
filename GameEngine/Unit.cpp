@@ -11,12 +11,30 @@ Unit::Unit()
 {
 	m_unitPosition = {};
 	m_unitMove = {};
+	m_unitDirection = false;
+	m_unitIsMoving = false;
+	m_tagged = false;
 	m_soundEffect = nullptr;
 	m_chunk = nullptr;
+	m_playerSprite = nullptr;
+	m_npcSprite = nullptr;
 }
 
 Unit::~Unit()
 {
+}
+
+void Unit::Reset()
+{
+	m_unitPosition = {};
+	m_unitMove = {};
+	m_unitDirection = false;
+	m_unitIsMoving = false;
+	m_tagged = false;
+	m_soundEffect = nullptr;
+	m_chunk = nullptr;
+	m_playerSprite = nullptr;
+	m_npcSprite = nullptr;
 }
 
 void Unit::Initialize()
@@ -41,6 +59,7 @@ void Unit::npcInitialize()
 	m_npcSprite->setColorBlue(0);
 	m_npcSprite->AddAnimation(EN_AN_IDLE, 0, 6, 6.0f);
 	m_npcSprite->AddAnimation(EN_AN_RUN, 6, 8, 6.0f);
+	m_npcSprite->AddAnimation(EN_AN_DEATH, 27, 38, 6.0f);
 }
 
 void Unit::AssignNonDefaultValues()
