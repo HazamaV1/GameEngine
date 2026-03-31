@@ -101,6 +101,7 @@ void Level::Serialize(std::ostream& _stream)
 	}
 
 	_stream.write(reinterpret_cast<char*>(&m_npcSpeed), sizeof(m_npcSpeed));
+	_stream.write(reinterpret_cast<char*>(&m_tagCount), sizeof(m_tagCount));
 	m_player->Serialize(_stream);
 	Resource::Serialize(_stream);
 }
@@ -123,6 +124,7 @@ void Level::Deserialize(std::istream& _stream)
 		m_units.push_back(unit);
 	}
 	_stream.read(reinterpret_cast<char*>(&m_npcSpeed), sizeof(m_npcSpeed));
+	_stream.read(reinterpret_cast<char*>(&m_tagCount), sizeof(m_tagCount));
 	m_player->Deserialize(_stream);
 	Resource::Deserialize(_stream);
 }

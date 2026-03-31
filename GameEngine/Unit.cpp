@@ -51,8 +51,8 @@ void Unit::Initialize()
 	m_playerSprite->AddAnimation(EN_AN_RUN, 6, 8, 6.0f);
 }
 
-void Unit::npcInitialize()
-{
+void Unit::npcInitialize() // Im pretty sure this isn't really needed, and that it could be done all within just Unit::Initialize()
+{							// but I wasn't able to realize it in time.
 	m_npcSprite = SpriteSheet::Pool->GetResource();
 	m_npcSprite->Load("../Assets/Textures/Warrior.tga");
 	m_npcSprite->SetSize(17, 6, 69, 44);
