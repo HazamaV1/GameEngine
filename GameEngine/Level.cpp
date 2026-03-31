@@ -79,10 +79,11 @@ void Level::Initialize()
 	{
 		Unit* npcs = Unit::Pool->GetResource();
 		npcs->npcInitialize();
+		float npcSpawnDist = rand() % 11 + 140;
 		float npcRandomAngle = rand() % 360;
 		float npcRadians = npcRandomAngle * (3.14159f / 180.0f);
-		float xOffset = playerPos.x + 150 * cos(npcRadians);
-		float yOffset = playerPos.y + 150 * sin(npcRadians);
+		float xOffset = playerPos.x + npcSpawnDist * cos(npcRadians);
+		float yOffset = playerPos.y + npcSpawnDist * sin(npcRadians);
 		glm::vec2 npcPos = { xOffset, yOffset };
 		npcs->setPosition(npcPos);
 		m_units.push_back(npcs);
