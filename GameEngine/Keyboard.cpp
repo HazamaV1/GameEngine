@@ -17,6 +17,7 @@ void Keyboard::Initialize(SDL_Window* _window)
 bool Keyboard::KeyDown(SDL_Event _event, SDL_Keycode _key)
 {
 	if (_event.type != SDL_EVENT_KEY_DOWN) return false;
+	if (_event.key.repeat) return false;
 
 	return _key == _event.key.key;
 }

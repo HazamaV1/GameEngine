@@ -114,6 +114,15 @@
     <ClInclude Include="WavDraw.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsController.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TGAReader.cpp">
@@ -192,6 +201,15 @@
       <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="WavDraw.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsController.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
   </ItemGroup>

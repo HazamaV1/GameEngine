@@ -10,6 +10,9 @@ class AudioController;
 class SoundEffect;
 class Song;
 class WAVDraw;
+class Timing;
+class PhysicsController;
+class SpriteSheet;
 
 class GameController : public Singleton<GameController>
 {
@@ -36,6 +39,11 @@ private:
 	Song* m_song;
 	WAVDraw* m_wavDraw;
 	float m_zoomY;
+	Timing* m_timing;
+	PhysicsController* m_physics;
+	SpriteSheet* m_fire;
+	SpriteSheet* m_smoke;
+	SpriteSheet* m_circle;
 };
 
 #endif // !GAME_CONTROLLER_H

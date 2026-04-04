@@ -164,10 +164,12 @@ void Renderer::RenderTexture(Texture* _texture, SDL_FRect _rect)
 	M_ASSERT((SDL_RenderTextureRotated(m_renderer, GetSDLTexture(_texture), NULL, &_rect, 0, NULL, SDL_FLIP_VERTICAL) >= 0), "Could not render texture");
 }
 
-void Renderer::RenderTexture(Texture* _texture, SDL_FRect _srcRect, SDL_FRect _destRect)
+void Renderer::RenderTexture(Texture* _texture, SDL_FRect _srcRect, SDL_FRect _destRect, int _alpha)
 {
 	_srcRect.y = _texture->GetImageInfo()->Height - _srcRect.y - _srcRect.h;
-	M_ASSERT((SDL_RenderTextureRotated(m_renderer, GetSDLTexture(_texture), &_srcRect, &_destRect, 0, NULL, SDL_FLIP_VERTICAL)>= 0), "Could not render texture ");
+	SDL_Texture* tex = GetSDLTexture(_texture);
+	SDL_SetTextureAlphaMod(tex, _alpha);
+	M_ASSERT((SDL_RenderTextureRotated(m_renderer, tex, &_srcRect, &_destRect, 0, NULL, SDL_FLIP_VERTICAL)>= 0), "Could not render texture ");
 }
 
 void Renderer::RenderTexture(SDL_Texture* _texture, SDL_FRect _srcRect, SDL_FRect _destRect, double _angle)
