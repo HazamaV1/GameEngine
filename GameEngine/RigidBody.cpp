@@ -23,9 +23,9 @@ void RigidBody::Reset()
 
 void RigidBody::Update(float _deltaTime, glm::vec2 _force)
 {
-	_force += m_wind + m_buoyancy;
+	_force += m_wind + m_buoyancy + m_randomForce;
 	_force.y *= -1;
-	m_acceleration = _force / m_mass;
+	m_acceleration = _force * m_mass;
 	m_velocity += m_acceleration * _deltaTime;
 	m_position += m_velocity * _deltaTime;
 

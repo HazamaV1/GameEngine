@@ -142,6 +142,8 @@ copy /Y "$(SolutionDir)External\SDL3_mixer\bin\x64\SDL3_mixer.dll" "$(TargetDir)
     <ClInclude Include="FileController.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="Gamepad.h" />
+    <ClInclude Include="Heroine.h" />
+    <ClInclude Include="HeroineState.h" />
     <ClInclude Include="InputController.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Level.h" />
@@ -176,6 +178,8 @@ copy /Y "$(SolutionDir)External\SDL3_mixer\bin\x64\SDL3_mixer.dll" "$(TargetDir)
     <ClCompile Include="FileController.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="Gamepad.cpp" />
+    <ClCompile Include="Heroine.cpp" />
+    <ClCompile Include="HeroineState.cpp" />
     <ClCompile Include="InputController.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Level.cpp" />
