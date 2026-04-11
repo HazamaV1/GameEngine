@@ -129,6 +129,18 @@
     <ClInclude Include="HeroineState.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Level1.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Level2.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RPS.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RPSstate.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TGAReader.cpp">
@@ -222,6 +234,18 @@
       <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="Heroine.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Level1.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Level2.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="RPS.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="RPSstate.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
   </ItemGroup>

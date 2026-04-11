@@ -9,7 +9,7 @@ Timing::Timing()
 	m_lastTime = m_currentTime;
 	m_fpsStart = m_currentTime;
 	m_baseTime = m_currentTime;
-	SetFPS(80);
+	SetFPS(60);
 }
 
 void Timing::Tick()

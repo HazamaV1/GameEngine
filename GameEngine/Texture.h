@@ -30,6 +30,7 @@ public:
 	void Deserialize(std::istream& _stream) override;
 	void ToString() override;
 	void Load(string _guid);
+	void Reset();
 
 	static ObjectPool<Texture>* Pool;
 

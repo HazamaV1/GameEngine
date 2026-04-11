@@ -48,3 +48,14 @@ void Texture::ToString()
 	cout << "TEXTURE" << endl;
 	m_texture->ToString();
 }
+
+void Texture::Reset()
+{
+	m_imageInfo = {};
+	m_texture = nullptr;
+	m_blendMode = SDL_BLENDMODE_BLEND;
+	m_blendAlpha = 255;
+	m_colorRed = 255;
+	m_colorGreen = 255;
+	m_colorBlue = 255;
+}

@@ -17,8 +17,8 @@ Renderer::~Renderer()
 void Renderer::Initialize()
 {
 	M_ASSERT((SDL_InitSubSystem(SDL_INIT_VIDEO) >= 0), "Failed to initialize SDL video.");
-	SDL_Point res = GetPrimaryResolution();
-	SDL_CreateWindowAndRenderer("My SDL3 Game", res.x, res.y, 0, &m_window, &m_renderer);
+	//SDL_Point res = GetPrimaryResolution();
+	SDL_CreateWindowAndRenderer("My SDL3 Game", 1920, 1080, 0, &m_window, &m_renderer);
 	M_ASSERT(m_window != nullptr, "Failed to initialize SDL window.");
 	M_ASSERT(m_renderer != nullptr, "Failed to initialize SDL renderer.");
 	//M_ASSERT(SDL_SetRenderVSync(m_renderer, 1) != -1, "Failed to set VSync");

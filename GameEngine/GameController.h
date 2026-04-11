@@ -45,7 +45,8 @@ private:
 	SpriteSheet* m_fire;
 	SpriteSheet* m_smoke;
 	SpriteSheet* m_circle;
-	Heroine* m_heroine;
+	string m_firstUserName;
+	string m_secondUserName;
 };
 
 #endif // !GAME_CONTROLLER_H

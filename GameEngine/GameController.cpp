@@ -1,21 +1,13 @@
-#include "GameController.h"
 #include "Renderer.h"
 #include "TTFont.h"
-#include "InputController.h"
-#include "Keyboard.h"
-#include "Mouse.h"
-#include "Gamepad.h"
 #include "AudioController.h"
+#include "InputController.h"
 #include "SoundEffect.h"
 #include "Song.h"
-#include "WavDraw.h"
-#include "Level.h"
 #include "Timing.h"
-#include "PhysicsController.h"
-#include "SpriteSheet.h";
-#include "SpriteAnim.h";
-#include "RigidBody.h";
-#include "Heroine.h"
+#include "GameController.h"
+#include "Level1.h"
+#include "Level2.h"
 
 //
 GameController::GameController()
@@ -26,8 +18,6 @@ GameController::GameController()
 	m_input = nullptr;
 	m_quit = false;
 	m_timing = nullptr;
-	m_physics = nullptr;
-	m_heroine = nullptr;
 }
 
 GameController::~GameController()
@@ -35,88 +25,70 @@ GameController::~GameController()
 	ShutDown();
 }
 
-void GameController::Initialize()
-{
-	AssetController::Instance().Initialize(10000000);
-	SpriteSheet::Pool = new ObjectPool<SpriteSheet>();
-	SpriteAnim::Pool = new ObjectPool<SpriteAnim>();
-	m_renderer = &Renderer::Instance();
-	m_renderer->Initialize();
-	m_input = &InputController::Instance();
-	m_input->Initialize(m_renderer->GetWindow());
-	m_fArial20 = new TTFont();
-	m_fArial20->Initialize(20);
-	m_timing = &Timing::Instance();
-	m_physics = &PhysicsController::Instance();
-	m_heroine = new Heroine();
-}
-
 void GameController::ShutDown()
 {
-	if (m_heroine != nullptr)
-	{
-		delete m_heroine;
-		m_heroine = nullptr;
-	}
+	delete Texture::Pool;
+	Texture::Pool = nullptr;
+	delete SoundEffect::Pool;
+	SoundEffect::Pool = nullptr;
 
 	if (m_fArial20 != nullptr)
 	{
 		delete m_fArial20;
 		m_fArial20 = nullptr;
 	}
-	
-	if (SpriteAnim::Pool != nullptr)
-	{
-		delete SpriteAnim::Pool;
-		SpriteAnim::Pool = nullptr;
-	}
 
-	if (SpriteSheet::Pool != nullptr)
-	{
-		delete SpriteSheet::Pool;
-		SpriteSheet::Pool = nullptr;
-	}
 }
 
-void GameController::HandleInput(SDL_Event _event)
+void GameController::Initialize()
 {
-	m_input->Process();
-
-	string temp;
-	if ((m_sdlEvent.type == SDL_EVENT_QUIT) ||
-		(m_input->KB()->KeyUp(m_sdlEvent, SDLK_ESCAPE)))
-	{
-		m_quit = true;
-	}
-	
-	m_heroine->HandleInput(_event, m_timing->GetDeltaTime());
+	AssetController::Instance().Initialize(15000000);
+	Texture::Pool = new ObjectPool<Texture>();
+	SoundEffect::Pool = new ObjectPool<SoundEffect>();
+	SoundEffect::Pool->GetResource();
+	m_renderer = &Renderer::Instance();
+	m_renderer->Initialize();
+	m_input = &InputController::Instance();
+	m_input->Initialize(m_renderer->GetWindow());
+	m_fArial20 = new TTFont();
+	m_fArial20->Initialize(20);
+	m_audio = &AudioController::Instance();
 }
+
+
+//void GameController::HandleInput(SDL_Event _event)
+//{
+//	m_input->Process();
+//
+//	string temp;
+//	if ((m_sdlEvent.type == SDL_EVENT_QUIT) ||
+//		(m_input->KB()->KeyUp(m_sdlEvent, SDLK_ESCAPE)))
+//	{
+//		m_quit = true;
+//	}
+//	
+//	m_heroine->HandleInput(_event, m_timing->GetDeltaTime());
+//}
 
 void GameController::RunGame()
 {
 	Initialize();
 
-	while (!m_quit)
+
+	Level1* level1 = new Level1();
+	level1->Initialize(m_renderer, m_fArial20, m_audio);
+	level1->RunLevel();
+	m_firstUserName = level1->GetFirstUser();
+	m_secondUserName = level1->GetSecondUser();
+
+	if (level1->GetCompleted())
 	{
-		m_timing->Tick();
-
-		m_renderer->SetDrawColor({ 255, 255, 255, 255 });
-		m_renderer->ClearScreen();
-
-		while (SDL_PollEvent(&m_sdlEvent) != 0)
-		{
-			HandleInput(m_sdlEvent);
-		}
-
-		m_physics->Update(m_timing->GetDeltaTime());
-		m_heroine->Update(m_timing->GetDeltaTime());
-
-		m_heroine->Render(m_renderer);
-		
-		SDL_RenderPresent(m_renderer->GetRenderer());
+		Level2* level2 = new Level2();
+		level2->Initialize(m_renderer, m_fArial20, m_audio, m_firstUserName, m_secondUserName);
+		level2->RunLevel();
+		delete level2;
 	}
-
-	ShutDown();
+	delete level1;
 }
 
 
