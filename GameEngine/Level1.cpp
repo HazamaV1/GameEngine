@@ -58,7 +58,7 @@ void Level1::HandleInput(SDL_Event _event)
 	{
 		m_inputText1 += temp1;
 	}
-	else if (m_input->KB()->KeyUp(m_sdlEvent, SDLK_BACKSPACE) && m_input1Con == false)
+	else if (m_input->KB()->KeyUp(m_sdlEvent, SDLK_BACKSPACE) && m_input1Con == false && m_inputText1 != "")
 	{
 		m_inputText1.pop_back();
 	}
@@ -78,7 +78,7 @@ void Level1::HandleInput(SDL_Event _event)
 	{
 		m_inputText2 += temp2;
 	}
-	else if (m_input->KB()->KeyUp(m_sdlEvent, SDLK_BACKSPACE) && m_input1Con == true)
+	else if (m_input->KB()->KeyUp(m_sdlEvent, SDLK_BACKSPACE) && m_input1Con == true && m_inputText2 != "")
 	{
 		m_inputText2.pop_back();
 	}

@@ -232,6 +232,74 @@ void Level2::HandleInput(SDL_Event _event)
 		}
 	}
 
+	//Player 1 hand movement
+	if (m_input->KB()->GetKeyStates()[SDL_SCANCODE_W])
+	{
+		m_rps1Y -= 10;
+		if (m_rps1Y <= 0)
+		{
+			m_rps1Y = 0;
+		}
+	}
+	if (m_input->KB()->GetKeyStates()[SDL_SCANCODE_A])
+	{
+		m_rps1X -= 10;
+		if (m_rps1X <= 0)
+		{
+			m_rps1X = 0;
+		}
+	}
+	if (m_input->KB()->GetKeyStates()[SDL_SCANCODE_S])
+	{
+		m_rps1Y += 10;
+		if (m_rps1Y >= m_renderer->GetWindowSize().y - 170)
+		{
+			m_rps1Y = m_renderer->GetWindowSize().y - 170;
+		}
+	}
+	if (m_input->KB()->GetKeyStates()[SDL_SCANCODE_D])
+	{
+		m_rps1X += 10;
+		if (m_rps1X >= m_renderer->GetWindowSize().x - 280)
+		{
+			m_rps1X = m_renderer->GetWindowSize().x - 280;
+		}
+	}
+
+	//Player 2 hand movement
+	if (m_input->KB()->GetKeyStates()[SDL_SCANCODE_UP])
+	{
+		m_rps2Y -= 10;
+		if (m_rps2Y <= 0)
+		{
+			m_rps2Y = 0;
+		}
+	}
+	if (m_input->KB()->GetKeyStates()[SDL_SCANCODE_LEFT])
+	{
+		m_rps2X -= 10;
+		if (m_rps2X <= 0)
+		{
+			m_rps2X = 0;
+		}
+	}
+	if (m_input->KB()->GetKeyStates()[SDL_SCANCODE_DOWN])
+	{
+		m_rps2Y += 10;
+		if (m_rps2Y >= m_renderer->GetWindowSize().y - 170)
+		{
+			m_rps2Y = m_renderer->GetWindowSize().y - 170;
+		}
+	}
+	if (m_input->KB()->GetKeyStates()[SDL_SCANCODE_RIGHT])
+	{
+		m_rps2X += 10;
+		if (m_rps2X >= m_renderer->GetWindowSize().x - 280)
+		{
+			m_rps2X = m_renderer->GetWindowSize().x - 280;
+		}
+	}
+
 	m_rps1->HandleInput(_event, t->GetDeltaTime());
 	m_rps2->HandleInput(_event, t->GetDeltaTime());
 }
@@ -248,10 +316,11 @@ void Level2::RunLevel()
 		m_renderer->SetDrawColor({ 255, 255, 255, 255 });
 		m_renderer->ClearScreen();
 
-		while (SDL_PollEvent(&m_sdlEvent))
+		/*while (SDL_PollEvent(&m_sdlEvent))
 		{
-			HandleInput(m_sdlEvent);
-		}
+		}*/
+		SDL_PollEvent(&m_sdlEvent);
+		HandleInput(m_sdlEvent);
 
 		m_rps1->Update(t->GetDeltaTime());
 		m_rps2->Update(t->GetDeltaTime());
